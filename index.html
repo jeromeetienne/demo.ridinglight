@@ -1,27 +1,30 @@
-<!doctype html><title>Riding a beam of light</title>
-<script src="vendor/tquery/tquery-bundle.js"></script>
-<script src="vendor/tquery/plugins/lightsaber/tquery.lightsaber.js"></script>
+<!doctype html>
+<html>
+<head>
+	<title>Riding a beam of light</title>
+	<script src="vendor/tquery/tquery-bundle.js"></script>
+	<script src="vendor/tquery/plugins/lightsaber/tquery.lightsaber.js"></script>
 
-<script src="vendor/tquery/plugins/skymap/tquery.skymap.js"></script>
-<script src="vendor/tquery/plugins/skymap/tquery.cubetexture.js"></script>
-<script src="vendor/tquery/plugins/materials/tquery.meshbasicmaterial.js"></script>
+	<script src="vendor/tquery/plugins/skymap/tquery.skymap.js"></script>
+	<script src="vendor/tquery/plugins/skymap/tquery.cubetexture.js"></script>
+	<script src="vendor/tquery/plugins/materials/tquery.meshbasicmaterial.js"></script>
 
-<script src="vendor/three.js/ShaderExtras.js"></script>
-<script src="vendor/three.js/postprocessing/EffectComposer.js"></script>
+	<script src="vendor/three.js/ShaderExtras.js"></script>
+	<script src="vendor/three.js/postprocessing/EffectComposer.js"></script>
 
-<script src="vendor/three.js/postprocessing/BloomPass.js"></script>
-<script src="vendor/three.js/postprocessing/DotScreenPass.js"></script>
-<script src="vendor/three.js/postprocessing/FilmPass.js"></script>
-<script src="vendor/three.js/postprocessing/MaskPass.js"></script>
-<script src="vendor/three.js/postprocessing/RenderPass.js"></script>
-<script src="vendor/three.js/postprocessing/SavePass.js"></script>
-<script src="vendor/three.js/postprocessing/ShaderPass.js"></script>
-<script src="vendor/three.js/postprocessing/TexturePass.js"></script>
+	<script src="vendor/three.js/postprocessing/BloomPass.js"></script>
+	<script src="vendor/three.js/postprocessing/DotScreenPass.js"></script>
+	<script src="vendor/three.js/postprocessing/FilmPass.js"></script>
+	<script src="vendor/three.js/postprocessing/MaskPass.js"></script>
+	<script src="vendor/three.js/postprocessing/RenderPass.js"></script>
+	<script src="vendor/three.js/postprocessing/SavePass.js"></script>
+	<script src="vendor/three.js/postprocessing/ShaderPass.js"></script>
+	<script src="vendor/three.js/postprocessing/TexturePass.js"></script>
 
-<script src="vendor/tquery/plugins/pproc/tquery.effectcomposer.js"></script>
+	<script src="vendor/tquery/plugins/pproc/tquery.effectcomposer.js"></script>
 
-<script src="vendor/tquery/plugins/minecraft/tquery.minecraftchar.js"></script>
-
+	<script src="vendor/tquery/plugins/minecraft/tquery.minecraftchar.js"></script>
+</head>
 <body><div id='info'>
 Riding a beam of light 
 <br/> 
@@ -96,25 +99,39 @@ Riding a beam of light
 	composer.finish();
 	
 	// from @sylvainpv sylvain pollet - https://twitter.com/SylvainPV/status/236255017508671488
-	var swinging	
+	// var swinging	
 	var oldCamPosition	= tQuery.createVector3();
+	var swinging		= false;
 	world.loop().hook(function(delta, now){
 		var object3D	= world.tCamera();
 		var position	= object3D.matrixWorld.getPosition().clone();
 
+		if( swinging === true ){
+			// copy old position
+			oldCamPosition.copy(position)
+			return;	
+		}
+
 		var deltaX	= position.x - oldCamPosition.x;
 		//console.log('delta', deltaX)
-		//if( Math.abs(deltaX) > 0.2 )	playSound("sound_swing3")
+		if( Math.abs(deltaX) > 0.3 ){
+			playSound("sound_swing3")			
+		}else if( Math.abs(deltaX) > 0.2 ){
+			playSound("sound_swing2")			
+		}else if( Math.abs(deltaX) > 0.1 ){
+			playSound("sound_swing1")			
+		}
 		
 		// copy old position
 		oldCamPosition.copy(position)
-
 		function playSound(domId){
-			var audioEl	= document.getElementById(domId);
-			audioEl.currentTime	= 0;
-			audioEl.play();
+			document.getElementById(domId).play();
+			swinging	= true;
+			setTimeout(function(){ swinging = false }, 700);
        		}
 	})
+
+	
     // cam.bind('move.saber', function(pos, oldpos){
     //     if(!timeouts.swing){
     //         timeouts.swing = true;
@@ -134,5 +151,5 @@ Riding a beam of light
 <audio src="sounds/saberoff.ogg" id="sound_off" preload="auto"></audio>
 <!-- github ribbon -->
 <a href="https://github.com/jeromeetienne/demo.ridinglight"><img style="position: fixed; top: 0; right: 0; border: 0;z-index: 9999;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
-  </body>
 </body>
+</html>
