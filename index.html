@@ -26,7 +26,8 @@
 	<script src="vendor/tquery/plugins/minecraft/tquery.minecraftchar.js"></script>
 </head>
 <body><div id='info'>
-Riding a beam of light 
+Riding a beam of light
+[<a href='/vendor/doccoviewer/#../../index.html' target='blank'>annoted source</a>]
 <br/> 
 <a href='https://github.com/mrdoob/three.js/' target='_blank'>three.js</a> thru 
 <a href='http://jeromeetienne.github.com/tquery/' target='_blank'>tQuery API</a>
@@ -35,9 +36,6 @@ Riding a beam of light
 </div><script>
 	// init the world
 	var world	= tQuery.createWorld().boilerplate().pageTitle('#info').start();
-
-	// make the background black
-//	world.tRenderer().setClearColorHex( 0x000000, 1 );
 
 	// move the camera
 	world.tCamera().position.z	= -3;
@@ -49,7 +47,7 @@ Riding a beam of light
 		textureCube	: textureCube
 	}).addTo(world);
 
-	// create the saber	
+	// create the saber
 	var saber	= tQuery.createLightSaber().addTo(world);
 	saber.object3D().translateY(-0.35).rotateY(Math.PI/2)
 
@@ -68,10 +66,6 @@ Riding a beam of light
 
 	character.parts.armR.rotation.x = 45*Math.PI/180;
 	character.parts.armR.rotation.z = -30*Math.PI/180;
-
-	character.parts.armR.rotation.x = 45*Math.PI/180;
-	character.parts.armR.rotation.z = -30*Math.PI/180;
-
 	character.parts.armL.rotation.x = -60*Math.PI/180;
 	character.parts.armL.rotation.z = -15*Math.PI/180;
 
@@ -85,15 +79,8 @@ Riding a beam of light
 
 	// put some post effect
 	var composer	= tQuery.createEffectComposer().renderPass();
-	//composer.sepia()
-	//composer.bleachbypass()
-	//composer.verticalBlur(1.1)
-	//composer.horizontalBlur(1.1)
 	composer.bloom(0.1)
 	composer.motionBlur(0.95);
-	//composer.fxaa();
-	//composer.colorify();
-	//composer.film(0.25, 0.25, 648, false)
 	composer.screen();
 	composer.vignette(1.2,1);
 	composer.finish();
@@ -130,18 +117,6 @@ Riding a beam of light
 			setTimeout(function(){ swinging = false }, 700);
        		}
 	})
-
-	
-    // cam.bind('move.saber', function(pos, oldpos){
-    //     if(!timeouts.swing){
-    //         timeouts.swing = true;
-    //         var delta = Math.abs(pos.x - oldpos.x)*100 // % screen
-    //         if(delta > 5){ app.playSound("swing3") }
-    //         else if(delta > 2){ app.playSound("swing2") }
-    //         else if(delta > .5){ app.playSound("swing1") }
-    //         setTimeout(function(){ timeouts.swing = false; },200);
-    //     }
-    // });
 </script>
 <!-- add sound -->
 <audio src="sounds/saberswing1.ogg" id="sound_swing1" preload="auto"></audio>
